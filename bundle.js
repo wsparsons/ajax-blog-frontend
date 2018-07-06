@@ -1,0 +1,1 @@
+console.error("Error: Cannot find module '/Users/Wendy/galvanize/Q2/ajax/ajax-blog/frontend/src/main.js' from '/Users/Wendy/galvanize/Q2/ajax/ajax-blog/frontend'");

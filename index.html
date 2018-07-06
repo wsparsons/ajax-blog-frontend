@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>My Blog</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script defer src="./bundle.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link rel="stylesheet" href="./main.css">
+</head>
+
+<body>
+  <!--Blog Header-->
+  <div class="jumbotron">
+    <div class="container">
+      <h1 class="display-4">Welcome to Wendy's Blog</h1>
+      <p class="lead">About Techology and Fun Stuff.</p>
+      <hr class="my-4">
+      <button id="create-button" class="btn btn-secondary">Create a New Post</button>
+    </div>
+  </div>
+
+  <!-- Blog Body -->
+  <div class="container">
+
+    <!-- Blog Alert -->
+    <div class="row">
+      <div class="col">
+        <section id="error" class="alert alert-danger text-center" style="display: none">
+        </section>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Blog List Group Side Bar-->
+      <div id="sidebar" class="col-4">
+
+      </div>
+
+      <!-- Blog View Content -->
+      <div id="view-content" class="col-8">
+
+        <!-- Blog Post Form -->
+        <div class="row">
+          <div class="col">
+            <form id="post-form" action="index.html" method="post">
+              <div class="form-group">
+                <label for="title">Title</label>
+                <input id="title" type="text" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="content">Content</label>
+                <textarea id="content" type- "text" class="form-control" rows="6"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+
+
+
+
+  </div>
+</body>
+
+</html>
