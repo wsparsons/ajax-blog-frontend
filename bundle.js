@@ -1,5 +1,7 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-const templates = require(`./templates/templates`)
+const templates = require(`./templates`)
+const herokuHost = `https://nameless-refuge-32795.herokuapp.com/posts`
+// const localHost = `http://localhost:3000/posts`
 
 const createButton = document.querySelector('#create-button')
 const sidebar = document.querySelector('#sidebar')
@@ -7,12 +9,12 @@ const viewContent = document.querySelector('#view-content')
 
 function renderMenu() {
   const listTabContainer = document.querySelector('#list-tab')
-  axios.get(`http://localhost:3000/posts`)
+  axios.get(`${herokuHost}`)
     .then(result => {
       let posts = result.data.data
 
       const listTabMenu = posts.map(post => {
-        return `<a class="list-group-item list-group-item-action" data-id="${post.id}" data-toggle="list" href="#${post.id}" role="tab">${post.title}</a>`
+        return templates.renderMenuTemplate(post)
       }).join('')
 
       listTabContainer.innerHTML = listTabMenu
@@ -30,7 +32,7 @@ function renderMenu() {
 
 
 function renderPost(id){
-  axios.get(`http://localhost:3000/posts/${id}`)
+  axios.get(`${herokuHost}/${id}`)
     .then(result => {
       let post = result.data.data
       viewContent.innerHTML = templates.postContentTemplate(post)
@@ -46,7 +48,7 @@ function renderPost(id){
 
 function deletePostButton(){
   let deletePostId = document.querySelector('#post-id').innerHTML
-  axios.delete(`http://localhost:3000/posts/${deletePostId}`)
+  axios.delete(`${herokuHost}/${deletePostId}`)
     .then(result => {
       viewContent.innerHTML = ''
       renderMenu()
@@ -74,7 +76,7 @@ function updatePost(event){
   let id = document.querySelector('#update-id').value
   let title = document.querySelector('#update-title').value
   let content = document.querySelector('#update-content').value
-  axios.put(`http://localhost:3000/posts/${id}`, {title, content})
+  axios.put(`${herokuHost}/${id}`, {title, content})
   .then(result => {
     renderMenu()
     renderPost(id)
@@ -85,7 +87,6 @@ function updatePost(event){
 renderMenu()
 
 function generateForm(){
-
   viewContent.innerHTML = templates.createFormTemplate()
   viewContent.addEventListener('submit', createPost)
 }
@@ -94,7 +95,7 @@ function createPost(event){
   event.preventDefault()
   let title = document.querySelector('#create-title').value
   let content = document.querySelector('#create-content').value
-  axios.post(`http://localhost:3000/posts/`, {title, content})
+  axios.post(`${herokuHost}`, {title, content})
   .then(result => {
     viewContent.innerHTML = ''
     renderMenu()
@@ -103,10 +104,13 @@ function createPost(event){
 
 }
 
-
 createButton.addEventListener('click', generateForm)
 
-},{"./templates/templates":2}],2:[function(require,module,exports){
+},{"./templates":2}],2:[function(require,module,exports){
+const renderMenuTemplate = (post) => {
+  return `
+    <a class="list-group-item list-group-item-action" data-id="${post.id}" data-toggle="list" href="#${post.id}" role="tab">${post.title}</a>`
+}
 
 const updateFormTemplate = () => {
   return `
@@ -155,6 +159,7 @@ const postContentTemplate = (post) => {
 }
 
 module.exports = {
+  renderMenuTemplate,
   updateFormTemplate,
   createFormTemplate,
   postContentTemplate

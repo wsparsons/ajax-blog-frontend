@@ -1,3 +1,7 @@
+const renderMenuTemplate = (post) => {
+  return `
+    <a class="list-group-item list-group-item-action" data-id="${post.id}" data-toggle="list" href="#${post.id}" role="tab">${post.title}</a>`
+}
 
 const updateFormTemplate = () => {
   return `
@@ -46,6 +50,7 @@ const postContentTemplate = (post) => {
 }
 
 module.exports = {
+  renderMenuTemplate,
   updateFormTemplate,
   createFormTemplate,
   postContentTemplate

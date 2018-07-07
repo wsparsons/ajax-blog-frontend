@@ -1,4 +1,6 @@
-const templates = require(`./templates/templates`)
+const templates = require(`./templates`)
+const herokuHost = `https://nameless-refuge-32795.herokuapp.com/posts`
+// const localHost = `http://localhost:3000/posts`
 
 const createButton = document.querySelector('#create-button')
 const sidebar = document.querySelector('#sidebar')
@@ -6,12 +8,12 @@ const viewContent = document.querySelector('#view-content')
 
 function renderMenu() {
   const listTabContainer = document.querySelector('#list-tab')
-  axios.get(`http://localhost:3000/posts`)
+  axios.get(`${herokuHost}`)
     .then(result => {
       let posts = result.data.data
 
       const listTabMenu = posts.map(post => {
-        return `<a class="list-group-item list-group-item-action" data-id="${post.id}" data-toggle="list" href="#${post.id}" role="tab">${post.title}</a>`
+        return templates.renderMenuTemplate(post)
       }).join('')
 
       listTabContainer.innerHTML = listTabMenu
@@ -29,7 +31,7 @@ function renderMenu() {
 
 
 function renderPost(id){
-  axios.get(`http://localhost:3000/posts/${id}`)
+  axios.get(`${herokuHost}/${id}`)
     .then(result => {
       let post = result.data.data
       viewContent.innerHTML = templates.postContentTemplate(post)
@@ -45,7 +47,7 @@ function renderPost(id){
 
 function deletePostButton(){
   let deletePostId = document.querySelector('#post-id').innerHTML
-  axios.delete(`http://localhost:3000/posts/${deletePostId}`)
+  axios.delete(`${herokuHost}/${deletePostId}`)
     .then(result => {
       viewContent.innerHTML = ''
       renderMenu()
@@ -73,7 +75,7 @@ function updatePost(event){
   let id = document.querySelector('#update-id').value
   let title = document.querySelector('#update-title').value
   let content = document.querySelector('#update-content').value
-  axios.put(`http://localhost:3000/posts/${id}`, {title, content})
+  axios.put(`${herokuHost}/${id}`, {title, content})
   .then(result => {
     renderMenu()
     renderPost(id)
@@ -84,7 +86,6 @@ function updatePost(event){
 renderMenu()
 
 function generateForm(){
-
   viewContent.innerHTML = templates.createFormTemplate()
   viewContent.addEventListener('submit', createPost)
 }
@@ -93,7 +94,7 @@ function createPost(event){
   event.preventDefault()
   let title = document.querySelector('#create-title').value
   let content = document.querySelector('#create-content').value
-  axios.post(`http://localhost:3000/posts/`, {title, content})
+  axios.post(`${herokuHost}`, {title, content})
   .then(result => {
     viewContent.innerHTML = ''
     renderMenu()
@@ -101,6 +102,5 @@ function createPost(event){
   .catch(console.error)
 
 }
-
 
 createButton.addEventListener('click', generateForm)
