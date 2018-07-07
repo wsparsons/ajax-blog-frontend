@@ -34,16 +34,28 @@ function renderPost(id){
   axios.get(`http://localhost:3000/posts/${id}`)
     .then(result => {
       let post = result.data.data
-
-      navTabContent.innerHTML = templates.postContentTemplate(post)
+      viewContent.innerHTML = templates.postContentTemplate(post)
 
       const editButton = document.querySelector('#post-edit')
-      editButton.addEventListener('click', editPost)
+      editButton.addEventListener('click', editPostButton)
+
+      const deleteButton = document.querySelector('#post-delete')
+      deleteButton.addEventListener('click', deletePostButton)
     })
     .catch(console.error)
 }
 
-function editPost(){
+function deletePostButton(){
+  let deletePostId = document.querySelector('#post-id').innerHTML
+  axios.delete(`http://localhost:3000/posts/${deletePostId}`)
+    .then(result => {
+      viewContent.innerHTML = ''
+      renderMenu()
+    })
+    .catch(console.error)
+}
+
+function editPostButton(){
   let editPostId = document.querySelector('#post-id').innerHTML
   let editPostTitle = document.querySelector('#post-title').innerHTML
   let editPostContent = document.querySelector('#post-content').innerHTML
@@ -74,6 +86,7 @@ function updatePost(event){
 renderMenu()
 
 function generateForm(){
+  if(!viewContent.contains())
 
   viewContent.innerHTML = templates.createFormTemplate()
   // viewContent.addEventListener('submit', createPost)
@@ -95,11 +108,11 @@ const updateFormTemplate = () => {
       <p id="update-id" class="d-none"></p>
       <div class="form-group">
         <label for="title">Title</label>
-        <input id="update-title" type="text" class="form-control">
+        <input id="update-title" type="text" class="form-control" required>
       </div>
       <div class="form-group">
         <label for="content">Content</label>
-        <textarea id="update-content" type="text" class="form-control" rows="6"></textarea>
+        <textarea id="update-content" type="text" class="form-control" rows="6" required></textarea>
       </div>
       <button id="update-submit" type="submit" class="btn btn-outline-primary">Submit</button>
     </form>`
@@ -110,11 +123,11 @@ const createFormTemplate = () => {
     <form id="create-form">
       <div class="form-group">
         <label for="title">Title</label>
-        <input id="create-title" type="text" class="form-control">
+        <input id="create-title" type="text" class="form-control" required>
       </div>
       <div class="form-group">
         <label for="content">Content</label>
-        <textarea id="create-content" type="text" class="form-control" rows="6"></textarea>
+        <textarea id="create-content" type="text" class="form-control" rows="6" required></textarea>
       </div>
       <button id="create-submit" type="submit" class="btn btn-outline-primary">Submit</button>
     </form>`
@@ -122,15 +135,17 @@ const createFormTemplate = () => {
 
 const postContentTemplate = (post) => {
   return `
-  <div class="tab-pane fade show active" role="tabpanel">
-    <p id="post-id" class="d-none">${post.id}</p>
-    <h1 id="post-title">${post.title}</h1>
-    <hr>
-    <p id="post-content">${post.content}</p>
-    <br>
-    <button id="post-edit" class="btn btn-outline-info btn-sm">Edit</button>
-    <button id="post-delete" class="btn btn-outline-danger btn-sm">Delete</button>
-  </div>`
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade show active" role="tabpanel">
+        <p id="post-id" class="d-none">${post.id}</p>
+        <h1 id="post-title">${post.title}</h1>
+        <hr>
+        <p id="post-content">${post.content}</p>
+        <br>
+        <button id="post-edit" class="btn btn-outline-info btn-sm">Edit</button>
+        <button id="post-delete" class="btn btn-outline-danger btn-sm">Delete</button>
+      </div>
+    </div>`
 }
 
 module.exports = {

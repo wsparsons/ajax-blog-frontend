@@ -33,16 +33,28 @@ function renderPost(id){
   axios.get(`http://localhost:3000/posts/${id}`)
     .then(result => {
       let post = result.data.data
-
-      navTabContent.innerHTML = templates.postContentTemplate(post)
+      viewContent.innerHTML = templates.postContentTemplate(post)
 
       const editButton = document.querySelector('#post-edit')
-      editButton.addEventListener('click', editPost)
+      editButton.addEventListener('click', editPostButton)
+
+      const deleteButton = document.querySelector('#post-delete')
+      deleteButton.addEventListener('click', deletePostButton)
     })
     .catch(console.error)
 }
 
-function editPost(){
+function deletePostButton(){
+  let deletePostId = document.querySelector('#post-id').innerHTML
+  axios.delete(`http://localhost:3000/posts/${deletePostId}`)
+    .then(result => {
+      viewContent.innerHTML = ''
+      renderMenu()
+    })
+    .catch(console.error)
+}
+
+function editPostButton(){
   let editPostId = document.querySelector('#post-id').innerHTML
   let editPostTitle = document.querySelector('#post-title').innerHTML
   let editPostContent = document.querySelector('#post-content').innerHTML
@@ -73,6 +85,7 @@ function updatePost(event){
 renderMenu()
 
 function generateForm(){
+  if(!viewContent.contains())
 
   viewContent.innerHTML = templates.createFormTemplate()
   // viewContent.addEventListener('submit', createPost)
