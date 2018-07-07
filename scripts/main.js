@@ -3,7 +3,6 @@ const templates = require(`./templates/templates`)
 const createButton = document.querySelector('#create-button')
 const sidebar = document.querySelector('#sidebar')
 const viewContent = document.querySelector('#view-content')
-const navTabContent = document.querySelector('#nav-tabContent')
 
 function renderMenu() {
   const listTabContainer = document.querySelector('#list-tab')
@@ -85,16 +84,23 @@ function updatePost(event){
 renderMenu()
 
 function generateForm(){
-  if(!viewContent.contains())
 
   viewContent.innerHTML = templates.createFormTemplate()
-  // viewContent.addEventListener('submit', createPost)
+  viewContent.addEventListener('submit', createPost)
 }
 
-// function createPost(event){
-//   event.preventDefault()
-//
-// }
+function createPost(event){
+  event.preventDefault()
+  let title = document.querySelector('#create-title').value
+  let content = document.querySelector('#create-content').value
+  axios.post(`http://localhost:3000/posts/`, {title, content})
+  .then(result => {
+    viewContent.innerHTML = ''
+    renderMenu()
+  })
+  .catch(console.error)
+
+}
 
 
 createButton.addEventListener('click', generateForm)
