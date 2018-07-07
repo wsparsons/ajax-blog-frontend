@@ -4,8 +4,8 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "build": "browserify ./src/main.js -o bundle.js",
-    "watch": "watchify ./src/main.js -o bundle.js",
+    "build": "browserify ./scripts/main.js -o bundle.js",
+    "watch": "watchify ./scripts/main.js -o bundle.js",
     "dev-server": "live-server .",
     "dev": "run-all \"npm run watch\" \"npm run dev-server\""
   },
