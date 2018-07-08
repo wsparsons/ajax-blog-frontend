@@ -7,6 +7,7 @@ const createButton = document.querySelector('#create-button')
 const sidebar = document.querySelector('#sidebar')
 const viewContent = document.querySelector('#view-content')
 
+//// GET ALL
 function renderMenu() {
   const listTabContainer = document.querySelector('#list-tab')
   axios.get(`${herokuHost}`)
@@ -30,7 +31,7 @@ function renderMenu() {
     .catch(console.error)
 }
 
-
+//// GET ONE
 function renderPost(id){
   axios.get(`${herokuHost}/${id}`)
     .then(result => {
@@ -46,14 +47,17 @@ function renderPost(id){
     .catch(console.error)
 }
 
-function deletePostButton(){
-  let deletePostId = document.querySelector('#post-id').innerHTML
-  axios.delete(`${herokuHost}/${deletePostId}`)
-    .then(result => {
-      viewContent.innerHTML = ''
-      renderMenu()
-    })
-    .catch(console.error)
+///// CREATE
+function createPost(event){
+  event.preventDefault()
+  let name = document.querySelector('#create-name').value
+  let recipe = document.querySelector('#create-recipe').value
+  axios.post(`${herokuHost}`, {name, recipe})
+  .then(result => {
+    viewContent.innerHTML = ''
+    renderMenu()
+  })
+  .catch(console.error)
 }
 
 function editPostButton(){
@@ -71,6 +75,7 @@ function editPostButton(){
   updateForm.addEventListener('submit', updatePost)
 }
 
+//// UPDATE
 function updatePost(event){
   event.preventDefault()
   let id = document.querySelector('#update-id').value
@@ -84,6 +89,17 @@ function updatePost(event){
   .catch(console.error)
 }
 
+//// DELETE
+function deletePostButton(){
+  let deletePostId = document.querySelector('#post-id').innerHTML
+  axios.delete(`${herokuHost}/${deletePostId}`)
+  .then(result => {
+    viewContent.innerHTML = ''
+    renderMenu()
+  })
+  .catch(console.error)
+}
+
 renderMenu()
 
 function generateForm(){
@@ -91,18 +107,6 @@ function generateForm(){
   viewContent.addEventListener('submit', createPost)
 }
 
-function createPost(event){
-  event.preventDefault()
-  let name = document.querySelector('#create-name').value
-  let recipe = document.querySelector('#create-recipe').value
-  axios.post(`${herokuHost}`, {name, recipe})
-  .then(result => {
-    viewContent.innerHTML = ''
-    renderMenu()
-  })
-  .catch(console.error)
-
-}
 
 createButton.addEventListener('click', generateForm)
 

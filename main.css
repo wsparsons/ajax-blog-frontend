@@ -1,19 +1,18 @@
 * {
   font-family: 'Pontano Sans', sans-serif;
-  color: #011638;
 }
 
 .jumbotron {
-  /* background-image: url('/images/fresh_snow.png'); */
-  background-image: url('/images/food.png');
+  background-image: url('/images/fresh_snow.png');
+  /* background-image: url('/images/food.png'); */
 }
 
 button:hover {
   cursor: pointer;
 }
 
-#create-button {
-  outline-color: red;
+#create-button:hover {
+  background-color: #EAC36A;
 }
 
 textarea {
@@ -26,9 +25,11 @@ textarea {
 
 
 a.list-group-item:hover {
-    background-color: #F1DEDE;
+  background-image: url('/images/food.png')
 }
 
-a.list-group-item option:checked {
-    background-color: #F1DEDE;
+.container {
+  margin: 0px auto 20px auto;
+  /* padding: 20px 20px; */
+  /* width: 90%; */
 }
