@@ -57,14 +57,14 @@ function deletePostButton(){
 
 function editPostButton(){
   let editPostId = document.querySelector('#post-id').innerHTML
-  let editPostTitle = document.querySelector('#post-title').innerHTML
-  let editPostContent = document.querySelector('#post-content').innerHTML
+  let editPostTitle = document.querySelector('#post-name').innerHTML
+  let editPostContent = document.querySelector('#post-recipe').innerHTML
 
   viewContent.innerHTML = templates.updateFormTemplate()
 
   document.querySelector("#update-id").value = editPostId
-  document.querySelector('#update-title').value = editPostTitle
-  document.querySelector('#update-content').value = editPostContent
+  document.querySelector('#update-name').value = editPostTitle
+  document.querySelector('#update-recipe').value = editPostContent
 
   let updateForm = document.querySelector('#update-form')
   updateForm.addEventListener('submit', updatePost)
@@ -73,9 +73,9 @@ function editPostButton(){
 function updatePost(event){
   event.preventDefault()
   let id = document.querySelector('#update-id').value
-  let title = document.querySelector('#update-title').value
-  let content = document.querySelector('#update-content').value
-  axios.put(`${herokuHost}/${id}`, {title, content})
+  let name = document.querySelector('#update-name').value
+  let recipe = document.querySelector('#update-recipe').value
+  axios.put(`${herokuHost}/${id}`, {name, recipe})
   .then(result => {
     renderMenu()
     renderPost(id)
@@ -92,9 +92,9 @@ function generateForm(){
 
 function createPost(event){
   event.preventDefault()
-  let title = document.querySelector('#create-title').value
-  let content = document.querySelector('#create-content').value
-  axios.post(`${herokuHost}`, {title, content})
+  let name = document.querySelector('#create-name').value
+  let recipe = document.querySelector('#create-recipe').value
+  axios.post(`${herokuHost}`, {name, recipe})
   .then(result => {
     viewContent.innerHTML = ''
     renderMenu()

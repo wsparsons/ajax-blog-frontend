@@ -1,9 +1,11 @@
 * {
-  font-family: 'Open Sans Condensed', sans-serif;
+  font-family: 'Pontano Sans', sans-serif;
+  color: #011638;
 }
 
 .jumbotron {
-  background-image: url('/images/fresh_snow.png');
+  /* background-image: url('/images/fresh_snow.png'); */
+  background-image: url('/images/food.png');
 }
 
 button:hover {
@@ -18,6 +20,15 @@ textarea {
   overflow: auto;
 }
 
-#post-content {
+#post-recipe {
   white-space: pre-line;
+}
+
+
+a.list-group-item:hover {
+    background-color: #F1DEDE;
+}
+
+a.list-group-item option:checked {
+    background-color: #F1DEDE;
 }

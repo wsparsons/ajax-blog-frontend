@@ -58,14 +58,14 @@ function deletePostButton(){
 
 function editPostButton(){
   let editPostId = document.querySelector('#post-id').innerHTML
-  let editPostTitle = document.querySelector('#post-title').innerHTML
-  let editPostContent = document.querySelector('#post-content').innerHTML
+  let editPostTitle = document.querySelector('#post-name').innerHTML
+  let editPostContent = document.querySelector('#post-recipe').innerHTML
 
   viewContent.innerHTML = templates.updateFormTemplate()
 
   document.querySelector("#update-id").value = editPostId
-  document.querySelector('#update-title').value = editPostTitle
-  document.querySelector('#update-content').value = editPostContent
+  document.querySelector('#update-name').value = editPostTitle
+  document.querySelector('#update-recipe').value = editPostContent
 
   let updateForm = document.querySelector('#update-form')
   updateForm.addEventListener('submit', updatePost)
@@ -74,9 +74,9 @@ function editPostButton(){
 function updatePost(event){
   event.preventDefault()
   let id = document.querySelector('#update-id').value
-  let title = document.querySelector('#update-title').value
-  let content = document.querySelector('#update-content').value
-  axios.put(`${herokuHost}/${id}`, {title, content})
+  let name = document.querySelector('#update-name').value
+  let recipe = document.querySelector('#update-recipe').value
+  axios.put(`${herokuHost}/${id}`, {name, recipe})
   .then(result => {
     renderMenu()
     renderPost(id)
@@ -93,9 +93,9 @@ function generateForm(){
 
 function createPost(event){
   event.preventDefault()
-  let title = document.querySelector('#create-title').value
-  let content = document.querySelector('#create-content').value
-  axios.post(`${herokuHost}`, {title, content})
+  let name = document.querySelector('#create-name').value
+  let recipe = document.querySelector('#create-recipe').value
+  axios.post(`${herokuHost}`, {name, recipe})
   .then(result => {
     viewContent.innerHTML = ''
     renderMenu()
@@ -109,21 +109,21 @@ createButton.addEventListener('click', generateForm)
 },{"./templates":2}],2:[function(require,module,exports){
 const renderMenuTemplate = (post) => {
   return `
-    <a class="list-group-item list-group-item-action" data-id="${post.id}" data-toggle="list" href="#${post.id}" role="tab">${post.title}</a>`
+    <a class="list-group-item list-group-item-action" data-id="${post.id}" data-toggle="list" href="#${post.id}" role="tab">${post.name}</a>`
 }
 
 const createFormTemplate = () => {
   return `
   <form id="create-form">
   <div class="form-group">
-  <label for="title">Title</label>
-  <input id="create-title" type="text" class="form-control" required>
+  <label for="name">Recipe name</label>
+  <input id="create-name" type="text" class="form-control" required>
   </div>
   <div class="form-group">
-  <label for="content">Content</label>
-  <textarea id="create-content" type="text" class="form-control" rows="10" required></textarea>
+  <label for="content">Recipe</label>
+  <textarea id="create-recipe" type="text" class="form-control" rows="10" required></textarea>
   </div>
-  <button id="create-submit" type="submit" class="btn btn-outline-primary">Submit</button>
+  <button id="create-submit" type="submit" class="btn btn-outline-primary">Save Recipe</button>
   </form>`
 }
 
@@ -132,26 +132,26 @@ const updateFormTemplate = () => {
     <form id="update-form">
       <p id="update-id" class="d-none"></p>
       <div class="form-group">
-        <label for="title">Title</label>
-        <input id="update-title" type="text" class="form-control" required>
+        <label for="name">Recipe name</label>
+        <input id="update-name" type="text" class="form-control" required>
       </div>
       <div class="form-group">
-        <label for="content">Content</label>
-        <textarea id="update-content" type="text" class="form-control" rows="10" required></textarea>
+        <label for="content">Recipe</label>
+        <textarea id="update-recipe" type="text" class="form-control" rows="10" required></textarea>
       </div>
-      <button id="update-submit" type="submit" class="btn btn-outline-primary">Submit</button>
+      <button id="update-submit" type="submit" class="btn btn-outline-primary">Save Recipe</button>
     </form>`
 }
 
 
 const postContentTemplate = (post) => {
   return `
-    <div class="tab-content" id="nav-tabContent">
+    <div class="tab-recipe" id="nav-tabContent">
       <div class="tab-pane fade show active" role="tabpanel">
         <p id="post-id" class="d-none">${post.id}</p>
-        <h1 id="post-title">${post.title}</h1>
+        <h1 id="post-name">${post.name}</h1>
         <hr>
-        <p id="post-content">${post.content}</p>
+        <p id="post-recipe">${post.recipe}</p>
         <button id="post-edit" class="btn btn-outline-info">Edit</button>
         <button id="post-delete" class="btn btn-outline-danger">Delete</button>
       </div>
