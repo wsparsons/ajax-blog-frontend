@@ -1,5 +1,5 @@
 const templates = require(`./templates`)
-const herokuHost = `https://git.heroku.com/wendy-food-blog.git/posts`
+const herokuHost = `https://wendy-food-blog.herokuapp.com/posts`
 const localHost = `http://localhost:3000/posts`
 
 const createButton = document.querySelector('#create-button')
