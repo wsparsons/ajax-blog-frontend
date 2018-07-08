@@ -3,6 +3,21 @@ const renderMenuTemplate = (post) => {
     <a class="list-group-item list-group-item-action" data-id="${post.id}" data-toggle="list" href="#${post.id}" role="tab">${post.title}</a>`
 }
 
+const createFormTemplate = () => {
+  return `
+  <form id="create-form">
+  <div class="form-group">
+  <label for="title">Title</label>
+  <input id="create-title" type="text" class="form-control" required>
+  </div>
+  <div class="form-group">
+  <label for="content">Content</label>
+  <textarea id="create-content" type="text" class="form-control" rows="10" required></textarea>
+  </div>
+  <button id="create-submit" type="submit" class="btn btn-outline-primary">Submit</button>
+  </form>`
+}
+
 const updateFormTemplate = () => {
   return `
     <form id="update-form">
@@ -13,26 +28,12 @@ const updateFormTemplate = () => {
       </div>
       <div class="form-group">
         <label for="content">Content</label>
-        <textarea id="update-content" type="text" class="form-control" rows="6" required></textarea>
+        <textarea id="update-content" type="text" class="form-control" rows="10" required></textarea>
       </div>
       <button id="update-submit" type="submit" class="btn btn-outline-primary">Submit</button>
     </form>`
 }
 
-const createFormTemplate = () => {
-  return `
-    <form id="create-form">
-      <div class="form-group">
-        <label for="title">Title</label>
-        <input id="create-title" type="text" class="form-control" required>
-      </div>
-      <div class="form-group">
-        <label for="content">Content</label>
-        <textarea id="create-content" type="text" class="form-control" rows="6" required></textarea>
-      </div>
-      <button id="create-submit" type="submit" class="btn btn-outline-primary">Submit</button>
-    </form>`
-}
 
 const postContentTemplate = (post) => {
   return `
@@ -42,9 +43,8 @@ const postContentTemplate = (post) => {
         <h1 id="post-title">${post.title}</h1>
         <hr>
         <p id="post-content">${post.content}</p>
-        <br>
-        <button id="post-edit" class="btn btn-outline-info btn-sm">Edit</button>
-        <button id="post-delete" class="btn btn-outline-danger btn-sm">Delete</button>
+        <button id="post-edit" class="btn btn-outline-info">Edit</button>
+        <button id="post-delete" class="btn btn-outline-danger">Delete</button>
       </div>
     </div>`
 }

@@ -1,0 +1,23 @@
+* {
+  font-family: 'Open Sans Condensed', sans-serif;
+}
+
+.jumbotron {
+  background-image: url('/images/fresh_snow.png');
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+#create-button {
+  outline-color: red;
+}
+
+textarea {
+  overflow: auto;
+}
+
+#post-content {
+  white-space: pre-line;
+}
