@@ -6,15 +6,15 @@ const renderMenuTemplate = (post) => {
 const createFormTemplate = () => {
   return `
   <form id="create-form">
-  <div class="form-group">
-  <label for="name">Recipe name</label>
-  <input id="create-name" type="text" class="form-control" required>
-  </div>
-  <div class="form-group">
-  <label for="content">Recipe</label>
-  <textarea id="create-recipe" type="text" class="form-control" rows="10" required></textarea>
-  </div>
-  <button id="create-submit" type="submit" class="btn btn-outline-primary">Save Recipe</button>
+    <div class="form-group">
+      <label for="name">Recipe name</label>
+      <input id="create-name" type="text" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="content">Recipe</label>
+      <textarea id="create-recipe" type="text" class="form-control" rows="8" required></textarea>
+    </div>
+    <button id="create-submit" type="submit" class="btn btn-outline-primary">Save Recipe</button>
   </form>`
 }
 
@@ -28,7 +28,7 @@ const updateFormTemplate = () => {
       </div>
       <div class="form-group">
         <label for="content">Recipe</label>
-        <textarea id="update-recipe" type="text" class="form-control" rows="10" required></textarea>
+        <textarea id="update-recipe" type="text" class="form-control" rows="8" required></textarea>
       </div>
       <button id="update-submit" type="submit" class="btn btn-outline-primary">Save Recipe</button>
     </form>`
@@ -43,8 +43,8 @@ const postContentTemplate = (post) => {
         <h1 id="post-name">${post.name}</h1>
         <hr>
         <p id="post-recipe">${post.recipe}</p>
-        <button id="post-edit" class="btn btn-outline-info">Edit</button>
-        <button id="post-delete" class="btn btn-outline-danger">Delete</button>
+        <button id="post-edit" class="btn btn-outline-info">Edit Recipe</button>
+        <button id="post-delete" class="btn btn-outline-danger">Delete Recipe</button>
       </div>
     </div>`
 }

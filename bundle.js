@@ -9,20 +9,20 @@ const viewContent = document.querySelector('#view-content')
 
 //// GET ALL
 function renderMenu() {
-  const listTabContainer = document.querySelector('#list-tab')
+  let listTabContainer = document.querySelector('#list-tab')
   axios.get(`${herokuHost}`)
     .then(result => {
-      let posts = result.data.data
+      let posts = result.data.data.reverse()
 
-      const listTabMenu = posts.map(post => {
+      let listTabMenu = posts.map(post => {
         return templates.renderMenuTemplate(post)
       }).join('')
 
       listTabContainer.innerHTML = listTabMenu
 
-      const listTabs = document.querySelectorAll('a')
+      let listTabs = document.querySelectorAll('a')
 
-      listTabs.forEach(listTab => listTab.addEventListener('click', function(event) {
+      listTabs.forEach(listTab => listTab.addEventListener('click', function(event){
         event.preventDefault()
         let listTabId = listTab.getAttribute('data-id')
         renderPost(listTabId)
@@ -36,12 +36,13 @@ function renderPost(id){
   axios.get(`${herokuHost}/${id}`)
     .then(result => {
       let post = result.data.data
+
       viewContent.innerHTML = templates.postContentTemplate(post)
 
-      const editButton = document.querySelector('#post-edit')
-      editButton.addEventListener('click', editPostButton)
+      let editButton = document.querySelector('#post-edit')
+      let deleteButton = document.querySelector('#post-delete')
 
-      const deleteButton = document.querySelector('#post-delete')
+      editButton.addEventListener('click', editPostButton)
       deleteButton.addEventListener('click', deletePostButton)
     })
     .catch(console.error)
@@ -50,8 +51,10 @@ function renderPost(id){
 ///// CREATE
 function createPost(event){
   event.preventDefault()
+
   let name = document.querySelector('#create-name').value
   let recipe = document.querySelector('#create-recipe').value
+
   axios.post(`${herokuHost}`, {name, recipe})
   .then(result => {
     viewContent.innerHTML = ''
@@ -72,15 +75,18 @@ function editPostButton(){
   document.querySelector('#update-recipe').value = editPostContent
 
   let updateForm = document.querySelector('#update-form')
+
   updateForm.addEventListener('submit', updatePost)
 }
 
 //// UPDATE
 function updatePost(event){
   event.preventDefault()
+
   let id = document.querySelector('#update-id').value
   let name = document.querySelector('#update-name').value
   let recipe = document.querySelector('#update-recipe').value
+
   axios.put(`${herokuHost}/${id}`, {name, recipe})
   .then(result => {
     renderMenu()
@@ -92,6 +98,7 @@ function updatePost(event){
 //// DELETE
 function deletePostButton(){
   let deletePostId = document.querySelector('#post-id').innerHTML
+
   axios.delete(`${herokuHost}/${deletePostId}`)
   .then(result => {
     viewContent.innerHTML = ''
@@ -107,7 +114,6 @@ function generateForm(){
   viewContent.addEventListener('submit', createPost)
 }
 
-
 createButton.addEventListener('click', generateForm)
 
 },{"./templates":2}],2:[function(require,module,exports){
@@ -119,15 +125,15 @@ const renderMenuTemplate = (post) => {
 const createFormTemplate = () => {
   return `
   <form id="create-form">
-  <div class="form-group">
-  <label for="name">Recipe name</label>
-  <input id="create-name" type="text" class="form-control" required>
-  </div>
-  <div class="form-group">
-  <label for="content">Recipe</label>
-  <textarea id="create-recipe" type="text" class="form-control" rows="10" required></textarea>
-  </div>
-  <button id="create-submit" type="submit" class="btn btn-outline-primary">Save Recipe</button>
+    <div class="form-group">
+      <label for="name">Recipe name</label>
+      <input id="create-name" type="text" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="content">Recipe</label>
+      <textarea id="create-recipe" type="text" class="form-control" rows="8" required></textarea>
+    </div>
+    <button id="create-submit" type="submit" class="btn btn-outline-primary">Save Recipe</button>
   </form>`
 }
 
@@ -141,7 +147,7 @@ const updateFormTemplate = () => {
       </div>
       <div class="form-group">
         <label for="content">Recipe</label>
-        <textarea id="update-recipe" type="text" class="form-control" rows="10" required></textarea>
+        <textarea id="update-recipe" type="text" class="form-control" rows="8" required></textarea>
       </div>
       <button id="update-submit" type="submit" class="btn btn-outline-primary">Save Recipe</button>
     </form>`
@@ -156,8 +162,8 @@ const postContentTemplate = (post) => {
         <h1 id="post-name">${post.name}</h1>
         <hr>
         <p id="post-recipe">${post.recipe}</p>
-        <button id="post-edit" class="btn btn-outline-info">Edit</button>
-        <button id="post-delete" class="btn btn-outline-danger">Delete</button>
+        <button id="post-edit" class="btn btn-outline-info">Edit Recipe</button>
+        <button id="post-delete" class="btn btn-outline-danger">Delete Recipe</button>
       </div>
     </div>`
 }

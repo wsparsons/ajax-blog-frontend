@@ -2,34 +2,31 @@
   font-family: 'Pontano Sans', sans-serif;
 }
 
-.jumbotron {
-  background-image: url('/images/fresh_snow.png');
-  /* background-image: url('/images/food.png'); */
+a.list-group-item:hover {
+  background-image: url('/images/food.png')
 }
 
 button:hover {
   cursor: pointer;
 }
 
-#create-button:hover {
-  background-color: #EAC36A;
-}
-
 textarea {
   overflow: auto;
 }
 
+.container {
+  margin: 10px auto 20px auto;
+}
+
+.jumbotron {
+  /* background-image: url('/images/fresh_snow.png'); */
+  background-image: url('/images/food.png');
+}
+
+#create-button:hover {
+  background-color: #3066BE;
+}
+
 #post-recipe {
   white-space: pre-line;
-}
-
-
-a.list-group-item:hover {
-  background-image: url('/images/food.png')
-}
-
-.container {
-  margin: 0px auto 20px auto;
-  /* padding: 20px 20px; */
-  /* width: 90%; */
 }
